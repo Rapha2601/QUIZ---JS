@@ -1,11 +1,6 @@
 # Relatório de Tecnologias: React & NestJS
 
 # Raphael Ferreira e Pedro Sachetto
-
-> **Disciplina:** Desenvolvimento de Sistemas Web  
-> **Data:** Novembro de 2026  
-> **Limite:** 2 folhas
-
 ---
 
 ## 1. React
