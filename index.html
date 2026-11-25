@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Quiz de conhecimentos sobre TypeScript, React e NestJS."
+    />
+    <title>Quiz Dev Web | TypeScript, React e NestJS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: "DM Sans", sans-serif;
+        color: #20233a;
+        background: #f5f6fb;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        --purple: #6954dc;
+        --purple-dark: #4e3bb9;
+        --muted: #73778e;
+        --border: #e7e8f0;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        background:
+          radial-gradient(ellipse at 85% 4%, #ece9ff 0, transparent 30rem),
+          #f5f6fb;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .page {
+        width: min(100% - 32px, 780px);
+        margin: 0 auto;
+        padding: 34px 0 56px;
+      }
+
+      .topbar,
+      .brand,
+      .meta,
+      .question-heading,
+      .result-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .brand {
+        justify-content: flex-start;
+        gap: 12px;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        border-radius: 14px;
+        background: var(--purple);
+        color: #fff;
+        font-size: 19px;
+        font-weight: 700;
+      }
+
+      .brand-name {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 17px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+
+      .brand-subtitle {
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .top-tag,
+      .topic-tag {
+        border-radius: 999px;
+        background: #eeebff;
+        color: var(--purple-dark);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .top-tag {
+        padding: 9px 13px;
+      }
+
+      main {
+        margin-top: 52px;
+      }
+
+      .intro {
+        margin-bottom: 27px;
+        text-align: center;
+      }
+
+      .eyebrow {
+        margin: 0 0 11px;
+        color: var(--purple-dark);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -1px;
+      }
+
+      h1 {
+        margin-bottom: 10px;
+        font-size: clamp(30px, 6vw, 42px);
+      }
+
+      .intro-copy {
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .card {
+        overflow: hidden;
+        border: 1px solid rgba(231, 232, 240, 0.9);
+        border-radius: 22px;
+        background: #fff;
+        box-shadow: 0 18px 55px rgba(37, 34, 86, 0.08);
+      }
+
+      .welcome,
+      .result {
+        padding: clamp(25px, 6vw, 48px);
+        text-align: center;
+      }
+
+      .welcome-icon,
+      .result-icon {
+        display: grid;
+        width: 68px;
+        height: 68px;
+        margin: 0 auto 20px;
+        place-items: center;
+        border-radius: 22px;
+        background: #f0edff;
+        font-size: 32px;
+      }
+
+      .welcome h2,
+      .result h2 {
+        margin-bottom: 9px;
+        font-size: 27px;
+      }
+
+      .welcome > p,
+      .result > p {
+        max-width: 470px;
+        margin: 0 auto 25px;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .rules {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 11px;
+        margin: 27px 0;
+      }
+
+      .rule {
+        padding: 14px 8px;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+      }
+
+      .rule strong {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--purple-dark);
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 19px;
+      }
+
+      .rule span {
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .primary-button {
+        min-height: 48px;
+        padding: 0 24px;
+        border: 0;
+        border-radius: 13px;
+        background: var(--purple);
+        color: #fff;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 700;
+        transition: background 150ms ease, transform 150ms ease;
+      }
+
+      .primary-button:hover:not(:disabled) {
+        transform: translateY(-1px);
+        background: var(--purple-dark);
+      }
+
+      .primary-button:focus-visible,
+      .option:focus-within {
+        outline: 3px solid #b9b0ff;
+        outline-offset: 3px;
+      }
+
+      .primary-button:disabled {
+        cursor: not-allowed;
+        opacity: 0.48;
+      }
+
+      .quiz {
+        padding: clamp(22px, 5vw, 38px);
+      }
+
+      .meta {
+        gap: 12px;
+        margin-bottom: 18px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .topic-tag {
+        padding: 7px 11px;
+      }
+
+      .progress-track {
+        height: 7px;
+        overflow: hidden;
+        margin-bottom: 29px;
+        border-radius: 99px;
+        background: #efeff5;
+      }
+
+      .progress-bar {
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, #7965ef, #a28eff);
+        transition: width 250ms ease;
+      }
+
+      .question-heading {
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 22px;
+      }
+
+      .question-heading h2 {
+        max-width: 620px;
+        margin-bottom: 0;
+        font-size: clamp(19px, 4vw, 23px);
+        line-height: 1.45;
+      }
+
+      .question-mark {
+        flex: 0 0 auto;
+        color: #dad6f9;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 30px;
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      .options {
+        display: grid;
+        gap: 10px;
+      }
+
+      .option {
+        display: flex;
+        min-height: 55px;
+        align-items: center;
+        gap: 13px;
+        padding: 10px 15px;
+        border: 1px solid var(--border);
+        border-radius: 13px;
+        cursor: pointer;
+        transition: border-color 130ms ease, background 130ms ease;
+      }
+
+      .option:hover {
+        border-color: #b7adfa;
+        background: #faf9ff;
+      }
+
+      .option.selected {
+        border-color: var(--purple);
+        background: #f5f3ff;
+      }
+
+      .option input {
+        width: 17px;
+        height: 17px;
+        margin: 0;
+        accent-color: var(--purple);
+      }
+
+      .option-letter {
+        display: grid;
+        width: 28px;
+        height: 28px;
+        flex: 0 0 auto;
+        place-items: center;
+        border-radius: 9px;
+        background: #f1f1f7;
+        color: #62667e;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .option.selected .option-letter {
+        background: #e5e0ff;
+        color: var(--purple-dark);
+      }
+
+      .option-text {
+        color: #34374d;
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .quiz-footer {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 23px;
+      }
+
+      .result-score {
+        display: block;
+        margin: 15px 0 0;
+        color: var(--purple-dark);
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(50px, 12vw, 72px);
+        font-weight: 700;
+        letter-spacing: -4px;
+      }
+
+      .result-score small {
+        color: var(--muted);
+        font-size: 22px;
+        font-weight: 500;
+        letter-spacing: 0;
+      }
+
+      .status-pill {
+        display: inline-block;
+        margin: 10px 0 21px;
+        padding: 8px 13px;
+        border-radius: 99px;
+        background: #e8f8ef;
+        color: #197746;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .status-pill.failed {
+        background: #fff0ef;
+        color: #b8443c;
+      }
+
+      .result-actions {
+        justify-content: center;
+        gap: 12px;
+      }
+
+      .secondary-button {
+        min-height: 48px;
+        padding: 0 18px;
+        border: 1px solid var(--border);
+        border-radius: 13px;
+        background: #fff;
+        color: #454960;
+        cursor: pointer;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .secondary-button:hover {
+        border-color: #b7adfa;
+        background: #faf9ff;
+      }
+
+      footer {
+        padding-top: 20px;
+        color: #8b8ea1;
+        font-size: 12px;
+        text-align: center;
+      }
+
+      footer strong {
+        color: #676a80;
+      }
+
+      .noscript {
+        padding: 20px;
+        color: #9c2c2c;
+        text-align: center;
+      }
+
+      @media (max-width: 520px) {
+        .page {
+          width: min(100% - 22px, 780px);
+          padding-top: 19px;
+        }
+
+        main {
+          margin-top: 36px;
+        }
+
+        .top-tag {
+          padding: 8px 10px;
+          font-size: 10px;
+        }
+
+        .brand-name {
+          font-size: 15px;
+        }
+
+        .rules {
+          gap: 7px;
+        }
+
+        .rule span {
+          font-size: 10px;
+        }
+
+        .option {
+          gap: 9px;
+          padding: 9px 10px;
+        }
+
+        .option-text {
+          font-size: 13px;
+        }
+
+        .result-actions {
+          flex-direction: column;
+        }
+
+        .result-actions button {
+          width: 100%;
+        }
+      }
+
+      :root {
+        color-scheme: dark;
+        color: #eff0fa;
+        background: #10111a;
+        --purple: #8774f5;
+        --purple-dark: #b1a4ff;
+        --muted: #a0a4ba;
+        --border: #303246;
+      }
+
+      body {
+        background:
+          radial-gradient(ellipse at 85% 4%, #242039 0, transparent 30rem),
+          #10111a;
+      }
+
+      .top-tag,
+      .topic-tag {
+        background: #302b4d;
+        color: #c4baff;
+      }
+
+      .card {
+        border-color: #292b3d;
+        background: #191b29;
+        box-shadow: 0 18px 55px rgba(0, 0, 0, 0.28);
+      }
+
+      .welcome-icon,
+      .result-icon {
+        background: #302b4d;
+      }
+
+      .rule {
+        background: #1f2130;
+      }
+
+      .rule strong {
+        color: #c4baff;
+      }
+
+      .progress-track {
+        background: #2a2c3d;
+      }
+
+      .question-mark {
+        color: #8d84c2;
+      }
+
+      .option:hover {
+        border-color: #8272df;
+        background: #232137;
+      }
+
+      .option.selected {
+        background: #292442;
+      }
+
+      .option-letter {
+        background: #2b2d40;
+        color: #b5b8ca;
+      }
+
+      .option.selected .option-letter {
+        background: #3a335e;
+        color: #d0c8ff;
+      }
+
+      .option-text {
+        color: #e3e5f2;
+      }
+
+      .status-pill {
+        background: #183728;
+        color: #85d8a6;
+      }
+
+      .status-pill.failed {
+        background: #3b2328;
+        color: #ffaaa4;
+      }
+
+      .secondary-button {
+        background: #202232;
+        color: #e3e5f2;
+      }
+
+      .secondary-button:hover {
+        border-color: #8272df;
+        background: #292442;
+      }
+
+      footer {
+        color: #85899f;
+      }
+
+      footer strong {
+        color: #b9bdd1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <noscript>
+        <p class="noscript">Ative o JavaScript no navegador para iniciar o quiz.</p>
+      </noscript>
+    </div>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+      const { useState } = React;
+
+      const questions = [
+        {
+          topic: "TypeScript",
+          text: "Qual é a principal vantagem de usar TypeScript em um projeto JavaScript?",
+          options: [
+            "Substituir completamente o navegador por um servidor",
+            "Adicionar verificação de tipos durante o desenvolvimento",
+            "Executar código sem precisar de JavaScript",
+            "Converter automaticamente qualquer projeto em um banco de dados",
+            "Eliminar a necessidade de testes",
+          ],
+          answer: 1,
+        },
+        {
+          topic: "TypeScript",
+          text: "Qual tipo representa um valor que pode ser uma string ou um número?",
+          options: [
+            "string & number",
+            "string + number",
+            "string | number",
+            "string / number",
+            "string, number",
+          ],
+          answer: 2,
+        },
+        {
+          topic: "TypeScript",
+          text: "Para que serve a palavra-chave 'interface' no TypeScript?",
+          options: [
+            "Para definir a forma e os tipos das propriedades de um objeto",
+            "Para criar uma página HTML",
+            "Para iniciar um servidor HTTP",
+            "Para executar uma função em segundo plano",
+            "Para instalar um pacote",
+          ],
+          answer: 0,
+        },
+        {
+          topic: "TypeScript",
+          text: "Qual tipo é mais adequado para um valor desconhecido que deve ser verificado antes do uso?",
+          options: ["any", "never", "void", "unknown", "null"],
+          answer: 3,
+        },
+        {
+          topic: "TypeScript",
+          text: "O que um tipo genérico, como Array<T>, permite fazer?",
+          options: [
+            "Executar código sem compilação",
+            "Reutilizar tipos e funções com diferentes tipos de dados",
+            "Criar estilos CSS automaticamente",
+            "Desativar todas as verificações de tipos",
+            "Substituir os módulos do projeto",
+          ],
+          answer: 1,
+        },
+        {
+          topic: "TypeScript",
+          text: "Qual é o papel do arquivo tsconfig.json?",
+          options: [
+            "Armazenar dados dos usuários",
+            "Definir configurações do compilador TypeScript",
+            "Listar as rotas do navegador",
+            "Descrever os componentes visuais",
+            "Substituir o package.json",
+          ],
+          answer: 1,
+        },
+        {
+          topic: "TypeScript",
+          text: "O que significa declarar uma propriedade com o modificador 'readonly'?",
+          options: [
+            "A propriedade só aceita números",
+            "A propriedade não pode ser lida",
+            "A propriedade não deve ser reatribuída após sua inicialização",
+            "A propriedade será removida na compilação",
+            "A propriedade será sempre opcional",
+          ],
+          answer: 2,
+        },
+        {
+          topic: "React",
+          text: "Em React, o que são props?",
+          options: [
+            "Valores passados de um componente pai para um componente filho",
+            "Arquivos usados para configurar o servidor NestJS",
+            "Variáveis globais que o React altera automaticamente",
+            "Comandos para instalar dependências",
+            "Tipos de eventos exclusivos do TypeScript",
+          ],
+          answer: 0,
+        },
+        {
+          topic: "React",
+          text: "Para que serve o hook useState?",
+          options: [
+            "Para criar rotas de API",
+            "Para guardar e atualizar estado em um componente funcional",
+            "Para compilar arquivos TypeScript",
+            "Para estilizar componentes",
+            "Para conectar diretamente a um banco de dados",
+          ],
+          answer: 1,
+        },
+        {
+          topic: "React",
+          text: "Por que cada item de uma lista renderizada em React deve ter uma key estável e única?",
+          options: [
+            "Para que o React identifique os itens entre atualizações",
+            "Para criptografar o conteúdo da lista",
+            "Para impedir que o navegador use CSS",
+            "Para converter a lista em uma API",
+            "Para ordenar os itens alfabeticamente",
+          ],
+          answer: 0,
+        },
+        {
+          topic: "React",
+          text: "Para que serve o hook useEffect?",
+          options: [
+            "Para declarar tipos de interfaces",
+            "Para executar efeitos colaterais, como buscar dados ou registrar eventos",
+            "Para substituir toda a árvore de componentes",
+            "Para definir os estilos globais da aplicação",
+            "Para criar classes CSS",
+          ],
+          answer: 1,
+        },
+        {
+          topic: "React",
+          text: "O que caracteriza um campo de formulário controlado em React?",
+          options: [
+            "Seu valor é controlado pelo estado do React e atualizado por eventos",
+            "Ele não pode receber entrada do usuário",
+            "Ele funciona apenas com componentes de classe",
+            "Seu valor é armazenado exclusivamente no servidor",
+            "Ele não pode ser usado com formulários HTML",
+          ],
+          answer: 0,
+        },
+        {
+          topic: "React",
+          text: "Qual é uma forma correta de atualizar um contador definido com useState?",
+          options: [
+            "Alterar a variável de estado diretamente",
+            "Usar a função atualizadora retornada por useState",
+            "Reiniciar o navegador",
+            "Editar o arquivo HTML durante a execução",
+            "Alterar o valor dentro do CSS",
+          ],
+          answer: 1,
+        },
+        {
+          topic: "React",
+          text: "O que normalmente é retornado por um componente funcional React?",
+          options: [
+            "Uma consulta SQL",
+            "Um elemento ou árvore de elementos React para renderização",
+            "Um servidor HTTP em execução",
+            "Um arquivo package.json",
+            "Uma classe CSS obrigatória",
+          ],
+          answer: 1,
+        },
+        {
+          topic: "NestJS",
+          text: "Qual é a responsabilidade de um controller no NestJS?",
+          options: [
+            "Receber requisições e definir os endpoints da aplicação",
+            "Renderizar componentes React no navegador",
+            "Compilar estilos CSS",
+            "Armazenar todos os dados permanentemente",
+            "Instalar pacotes do projeto",
+          ],
+          answer: 0,
+        },
+        {
+          topic: "NestJS",
+          text: "Para que serve o decorador @Module() no NestJS?",
+          options: [
+            "Para declarar os metadados e organizar partes da aplicação",
+            "Para criar automaticamente uma página HTML",
+            "Para substituir o compilador TypeScript",
+            "Para estilizar uma rota HTTP",
+            "Para definir o estado de um componente React",
+          ],
+          answer: 0,
+        },
+        {
+          topic: "NestJS",
+          text: "O que é injeção de dependência no NestJS?",
+          options: [
+            "Um mecanismo para fornecer dependências, como serviços, às classes que precisam delas",
+            "Uma forma de inserir HTML diretamente no banco de dados",
+            "Uma ferramenta para criar animações CSS",
+            "Um método para ignorar todos os módulos",
+            "Um processo que converte React em SQL",
+          ],
+          answer: 0,
+        },
+        {
+          topic: "NestJS",
+          text: "Qual é o papel comum de um service no NestJS?",
+          options: [
+            "Executar lógica de negócio reutilizável",
+            "Definir a aparência visual de botões",
+            "Substituir o navegador",
+            "Controlar o layout de uma página React",
+            "Criar arquivos de imagem",
+          ],
+          answer: 0,
+        },
+        {
+          topic: "NestJS",
+          text: "O que é um DTO (Data Transfer Object) em uma API NestJS?",
+          options: [
+            "Um objeto usado para definir e transportar dados entre partes da aplicação",
+            "Um componente React para exibir uma tabela",
+            "Uma biblioteca para desenhar ícones",
+            "Um arquivo que inicia o navegador",
+            "Um serviço exclusivo para envio de e-mails",
+          ],
+          answer: 0,
+        },
+        {
+          topic: "NestJS",
+          text: "Para que serve um pipe no NestJS?",
+          options: [
+            "Para validar ou transformar dados recebidos em uma requisição",
+            "Para organizar componentes React na tela",
+            "Para criar estilos responsivos",
+            "Para guardar o estado do navegador",
+            "Para publicar automaticamente um repositório no GitHub",
+          ],
+          answer: 0,
+        },
+      ];
+
+      const passingScore = 14;
+      const letters = ["A", "B", "C", "D", "E"];
+
+      function App() {
+        const [screen, setScreen] = useState("welcome");
+        const [current, setCurrent] = useState(0);
+        const [answers, setAnswers] = useState([]);
+        const [score, setScore] = useState(0);
+
+        function startQuiz() {
+          setAnswers([]);
+          setCurrent(0);
+          setScore(0);
+          setScreen("quiz");
+        }
+
+        function selectAnswer(optionIndex) {
+          setAnswers((previous) => {
+            const updated = [...previous];
+            updated[current] = optionIndex;
+            return updated;
+          });
+        }
+
+        function nextQuestion() {
+          if (answers[current] === undefined) return;
+
+          if (current < questions.length - 1) {
+            setCurrent((previous) => previous + 1);
+            return;
+          }
+
+          const totalCorrect = questions.reduce(
+            (total, question, index) =>
+              total + (answers[index] === question.answer ? 1 : 0),
+            0
+          );
+          setScore(totalCorrect);
+          setScreen("result");
+        }
+
+        const question = questions[current];
+        const passed = score >= passingScore;
+
+        return (
+          <div className="page">
+            <header className="topbar">
+              <div className="brand">
+                <div className="brand-mark" aria-hidden="true">&lt;/&gt;</div>
+                <div>
+                  <div className="brand-name">Quiz Dev Web</div>
+                  <div className="brand-subtitle">Aprender, praticar, evoluir</div>
+                </div>
+              </div>
+              <span className="top-tag">PROJETO ACADÊMICO</span>
+            </header>
+
+            <main>
+              <div className="intro">
+                <p className="eyebrow">Desenvolvimento Web</p>
+                <h1>Desafio de tecnologia</h1>
+                <p className="intro-copy">
+                  Teste seus conhecimentos em TypeScript, React e NestJS.
+                </p>
+              </div>
+
+              {screen === "welcome" && (
+                <section className="card welcome" aria-labelledby="welcome-title">
+                  <div className="welcome-icon" aria-hidden="true">🧠</div>
+                  <h2 id="welcome-title">Pronto para o desafio?</h2>
+                  <p>
+                    Responda às questões sobre as tecnologias usadas no
+                    desenvolvimento web. Escolha uma alternativa em cada
+                    pergunta e confira seu resultado ao final.
+                  </p>
+                  <div className="rules" aria-label="Regras do quiz">
+                    <div className="rule">
+                      <strong>{questions.length}</strong>
+                      <span>questões</span>
+                    </div>
+                    <div className="rule">
+                      <strong>5</strong>
+                      <span>alternativas por questão</span>
+                    </div>
+                    <div className="rule">
+                      <strong>{passingScore}/20</strong>
+                      <span>mínimo para aprovação</span>
+                    </div>
+                  </div>
+                  <button className="primary-button" onClick={startQuiz}>
+                    Começar quiz <span aria-hidden="true">→</span>
+                  </button>
+                </section>
+              )}
+
+              {screen === "quiz" && (
+                <section className="card quiz" aria-labelledby="question-title">
+                  <div className="meta">
+                    <span>
+                      Questão {current + 1} de {questions.length}
+                    </span>
+                    <span className="topic-tag">{question.topic}</span>
+                  </div>
+                  <div
+                    className="progress-track"
+                    role="progressbar"
+                    aria-label="Progresso do quiz"
+                    aria-valuemin="0"
+                    aria-valuemax={questions.length}
+                    aria-valuenow={current + 1}
+                  >
+                    <div
+                      className="progress-bar"
+                      style={{
+                        width: `${((current + 1) / questions.length) * 100}%`,
+                      }}
+                    />
+                  </div>
+                  <div className="question-heading">
+                    <h2 id="question-title">{question.text}</h2>
+                    <span className="question-mark" aria-hidden="true">
+                      {String(current + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <div className="options" role="radiogroup" aria-labelledby="question-title">
+                    {question.options.map((option, index) => (
+                      <label
+                        className={`option ${
+                          answers[current] === index ? "selected" : ""
+                        }`}
+                        key={option}
+                      >
+                        <input
+                          type="radio"
+                          name={`question-${current}`}
+                          value={index}
+                          checked={answers[current] === index}
+                          onChange={() => selectAnswer(index)}
+                        />
+                        <span className="option-letter">{letters[index]}</span>
+                        <span className="option-text">{option}</span>
+                      </label>
+                    ))}
+                  </div>
+                  <div className="quiz-footer">
+                    <button
+                      className="primary-button"
+                      onClick={nextQuestion}
+                      disabled={answers[current] === undefined}
+                    >
+                      {current === questions.length - 1
+                        ? "Ver resultado"
+                        : "Próxima questão"}{" "}
+                      <span aria-hidden="true">→</span>
+                    </button>
+                  </div>
+                </section>
+              )}
+
+              {screen === "result" && (
+                <section className="card result" aria-labelledby="result-title">
+                  <div className="result-icon" aria-hidden="true">
+                    {passed ? "🎉" : "💪"}
+                  </div>
+                  <p className="eyebrow">Resultado final</p>
+                  <h2 id="result-title">
+                    {passed ? "Parabéns, você foi aprovado!" : "Continue praticando!"}
+                  </h2>
+                  <span className="result-score" aria-label={`${score} de 20 acertos`}>
+                    {score}
+                    <small> / {questions.length}</small>
+                  </span>
+                  <span className={`status-pill ${passed ? "" : "failed"}`}>
+                    {passed ? "Aprovado" : "Não aprovado"} · mínimo: {passingScore} acertos
+                  </span>
+                  <p>
+                    Você acertou {score} de {questions.length} questões sobre
+                    TypeScript, React e NestJS.
+                  </p>
+                  <div className="result-actions">
+                    <button className="primary-button" onClick={startQuiz}>
+                      Tentar novamente
+                    </button>
+                  </div>
+                </section>
+              )}
+            </main>
+
+            <footer>
+              <strong>Quiz Dev Web</strong> · TypeScript, React &amp; NestJS
+            </footer>
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>
